@@ -1,0 +1,31 @@
+.input {
+  cursor: pointer;
+  background: #eee;
+  border: 1px solid #ccc;
+  height: 100px;
+  width: 300px;
+  line-height: 120px;
+  overflow: hidden;
+
+  &::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+
+  &::before {
+    content: 'Drop your webpack profile here!';
+    text-align: center;
+    display: block;
+    border-radius: 3px;
+    padding: 5px 8px;
+    outline: none;
+    white-space: nowrap;
+    user-select: none;
+    cursor: pointer;
+    width: 300px;
+    line-height: 40px;
+  }
+
+  &:hover::before {
+    border-color: black;
+  }
+}
