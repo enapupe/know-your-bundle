@@ -3,17 +3,15 @@ const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
-const ManifestPlugin = require('webpack-manifest-plugin')
-
-const vendorManifest = require('./dist/vendor-manifest.json') // eslint-disable-line import/no-unresolved
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   devtool: 'source-map',
-  entry: { production: './src/index' },
+  entry: './src/index',
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'docs'),
     filename: '[name].[chunkhash].js',
-    publicPath: '/static/',
+    publicPath: '/',
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -29,16 +27,13 @@ module.exports = {
       },
     }),
     new ExtractTextPlugin('[name].[chunkhash].css'),
-    new webpack.DllReferencePlugin({
-      context: '.',
-      manifest: vendorManifest,
-    }),
     new CompressionPlugin({
       test: /\.(js|css)$/,
       threshold: 10240,
     }),
-    new ManifestPlugin({
-      fileName: 'production.stats.json',
+    new HtmlWebpackPlugin({
+      title: 'Know your bundle!',
+      template: './src/index.html.ejs',
     }),
   ],
   resolve: {
