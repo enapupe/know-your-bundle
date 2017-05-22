@@ -2,6 +2,7 @@ const path = require('path')
 
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -12,7 +13,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static/',
+    publicPath: '/',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -22,7 +23,11 @@ module.exports = {
         DEVTOOLS_WINDOW: JSON.stringify(process.env.DEVTOOLS_WINDOW),
       },
     }),
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin('[name].[chunkhash].css'),
+    new HtmlWebpackPlugin({
+      title: 'Know your bundle!',
+      template: './src/index.html.ejs',
+    }),
   ],
   resolve: {
     modules: [

@@ -1,10 +1,11 @@
+const path = require('path')
+
 const express = require('express')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 
 const config = require('./webpack.config')
-const baseHTML = require('./src/index.html')
 
 const ip = '0.0.0.0'
 const port = process.env.PORT || 3000
@@ -18,15 +19,17 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.use(webpackHotMiddleware(compiler))
 
-// index.html links to 2 <script> files,
-// one has to be ignored when developing (yarn dev)
-// that's why we route one of them to 404
-app.get('/static/404', (req, res) => {
-  res.status(404).send('')
-})
-
-app.get('*', (req, res) => {
-  res.send(baseHTML())
+app.use('*', (req, res, next) => {
+  const filename = path.join(compiler.outputPath, 'index.html')
+  compiler.outputFileSystem.readFile(filename, (err, result) => {
+    if (err) {
+      next(err)
+      return
+    }
+    res.set('content-type', 'text/html')
+    res.send(result)
+    res.end()
+  })
 })
 
 app.listen(port, ip, (err) => {
