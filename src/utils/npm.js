@@ -1,3 +1,5 @@
 import Fetch from '@cheesecakelabs/fetch'
 
-export default new Fetch('http://localhost:3333/')
+import { NPM_API } from '../config/constants'
+
+export default new Fetch(NPM_API)

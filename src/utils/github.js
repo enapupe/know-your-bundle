@@ -1,3 +1,5 @@
 import Fetch from '@cheesecakelabs/fetch'
 
-export default new Fetch('https://api.github.com/', null, { removeTrailingSlash: true })
+import { GITHUB_API } from '../config/constants'
+
+export default new Fetch(GITHUB_API, null, { removeTrailingSlash: true })
