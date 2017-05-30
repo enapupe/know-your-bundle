@@ -13,9 +13,10 @@ const filterNot = [
 
 const stripStandardModules = (mod) => !filterNot.includes(mod)
 const modName = (module) => module.name.split('/')[2]
-const getUniqueModules = (profile) => uniq(profile.modules.map(modName))
-      .filter(Boolean)
-      .filter(stripStandardModules)
-      .sort()
+const getUniqueModules = (profile) =>
+  uniq(profile.modules.map(modName))
+  .filter(Boolean)
+  .filter(stripStandardModules)
+  .sort()
 
 export default getUniqueModules

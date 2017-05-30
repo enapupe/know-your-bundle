@@ -75,7 +75,6 @@ class Main extends Component {
           {uniqueModules.map(this.renderModule)}
         </div>
       </div>
-
     )
   }
 }

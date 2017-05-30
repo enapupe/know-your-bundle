@@ -14,6 +14,7 @@ class App extends Component {
     const { children } = this.props
     return (
       <main>
+        <h4 style={{ margin: '0 0 20px 0' }}>This project is WIP - <a href="https://github.com/enapupe/know-your-bundle">GitHub repo</a></h4>
         {children}
       </main>
     )
