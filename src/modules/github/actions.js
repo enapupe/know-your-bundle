@@ -7,5 +7,5 @@ export const GET_REPOSITORY = defineAction('GET_REPOSITORY', REQUEST)
 
 export const getRepository = (reponame) => (dispatch, getState) => dispatch({
   type: GET_REPOSITORY,
-  payload: getState().repository.get(reponame) || githubService.repository(reponame),
+  payload: getState().repository.get(reponame) || githubService.repositoryRL(reponame),
 })

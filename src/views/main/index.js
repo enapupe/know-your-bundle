@@ -63,7 +63,6 @@ class Main extends Component {
     const { profile, dropError } = this.state
     const { moduleLoadingCount, githubLoadingCount } = this.props
     const uniqueModules = getUniqueModules(profile)
-
     return (
       <div>
         <DropProfile onDrop={this.getProfile} onError={this.handleDropError} />
