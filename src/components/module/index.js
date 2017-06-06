@@ -8,6 +8,7 @@ import { getModule } from '../../modules/module/actions'
 import { getRepository } from '../../modules/github/actions'
 import getReponameFromModule from '../../utils/get-reponame-from-module'
 import getModuleURL from '../../utils/get-module-url'
+import { Star, Eye, Fork, Legal, Tag } from '../../components/icon/icons'
 
 import styles from './styles.css'
 
@@ -50,14 +51,29 @@ class Module extends Component {
           <a target="_blank" rel="noopener noreferrer" href={getModuleURL(module)}>{name}</a>
         </h1>
         <p>{module.get('description')}</p>
-        <strong>{module.get('license')}</strong>
         <div>latest version v{module.getIn(['dist-tags', 'latest'])}</div>
-        <div>REPO {module.getIn(['repository', 'type'])}</div>
-        <div>{module.get('versions', new Map()).size} releases</div>
-        <div>forks {repository.get('forks')}</div>
-        <div>★ {repository.get('stargazers_count')}</div>
-        <div>👁 {repository.get('watchers_count')}</div>
-        <div>⑂ {repository.get('forks_count')}</div>
+        <div>repo_type{module.getIn(['repository', 'type'])}</div>
+
+        <div>
+          <Tag />
+          {module.get('versions', new Map()).size}
+        </div>
+        <div>
+          <Star />
+          {repository.get('stargazers_count')}
+        </div>
+        <div>
+          <Eye />
+          {repository.get('watchers_count')}
+        </div>
+        <div>
+          <Fork />
+          {repository.get('forks_count')}
+        </div>
+        <div>
+          <Legal />
+          {module.get('license')}
+        </div>
       </div>
     )
   }
