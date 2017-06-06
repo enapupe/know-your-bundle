@@ -77,15 +77,6 @@ module.exports = {
         options: {
           symbolId: '[name]_[hash]',
         },
-      }, {
-        loader: 'svgo-loader',
-        options: {
-          plugins: [
-            { removeTitle: true },
-            { convertColors: { shorthex: false } },
-            { convertPathData: false },
-          ],
-        },
       }],
     }],
   },

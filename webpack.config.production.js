@@ -78,6 +78,23 @@ module.exports = {
           loader: 'postcss-loader',
         }],
       }),
+    }, {
+      test: /\.svg$/,
+      use: [{
+        loader: 'svg-sprite-loader',
+        options: {
+          symbolId: '[name]_[hash]',
+        },
+      }, {
+        loader: 'svgo-loader',
+        options: {
+          plugins: [
+            { removeTitle: true },
+            { convertColors: { shorthex: false } },
+            { convertPathData: false },
+          ],
+        },
+      }],
     }],
   },
 }
