@@ -7,6 +7,5 @@ Get basic dependency informations about your webpack bundle; This project works 
 - Improve looks
 - List dependency reasons
 - Implement filters/sorting
-- Delay GitHub API requests to avoid rate limits
 - Add reducer caching w/ localStorage
 - Improve API error feedback (and add a reload button in each module that hasn&abpos;t loaded)
