@@ -1,10 +1,10 @@
 {
-  "name": "react-redux-boilerplate",
-  "version": "0.1.0",
-  "description": "Boilerplate project for a webapp using React/Redux architecture.",
-  "main": "lib/index.js",
+  "name": "know-your-bundle",
+  "version": "0.2.0",
+  "description": "Insights for your webpack bundle.",
+  "main": "src/index.js",
   "license": "MIT",
-  "repository": "CheesecakeLabs/react-redux-boilerplate",
+  "repository": "enapupe/know-your-bundle",
   "scripts": {
     "start": "node dist-server/server.js",
     "test": "yarn lint && yarn generate-view-tests && yarn jest",
