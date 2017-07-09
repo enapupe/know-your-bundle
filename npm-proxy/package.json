@@ -1,0 +1,16 @@
+{
+  "name": "npm-registry-proxy",
+  "version": "1.0.0",
+  "description": "because they dont support cors",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "enapupe",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.3",
+    "express": "^4.15.3",
+    "request": "^2.81.0"
+  }
+}
