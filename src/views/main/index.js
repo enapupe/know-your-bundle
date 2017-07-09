@@ -9,14 +9,18 @@ import getUniqueModules from '../../utils/get-unique-modules'
 import getReponameFromModule from '../../utils/get-reponame-from-module'
 import { GET_MODULE } from '../../modules/module/actions'
 import { GET_REPOSITORY } from '../../modules/github/actions'
+import { getAuthorizationURL } from '../../services/github'
 
 import styles from './styles.css'
 
-const mapStateToProps = ({ module, repository, loading }) => ({
+const AUTHORIZATION_URL = getAuthorizationURL()
+
+const mapStateToProps = ({ module, repository, loading, auth }) => ({
   modules: module,
   repositories: repository,
   githubLoadingCount: loading.get(GET_REPOSITORY.COUNT),
   moduleLoadingCount: loading.get(GET_MODULE.COUNT),
+  token: auth.get('access_token'),
 })
 
 class Main extends Component {
@@ -25,11 +29,13 @@ class Main extends Component {
     repositories: ImmutablePropTypes.map.isRequired,
     githubLoadingCount: PropTypes.number,
     moduleLoadingCount: PropTypes.number,
+    token: PropTypes.string,
   }
 
   static defaultProps = {
     githubLoadingCount: 0,
     moduleLoadingCount: 0,
+    token: undefined,
   }
 
   state = {
@@ -61,10 +67,11 @@ class Main extends Component {
 
   render() {
     const { profile, dropError } = this.state
-    const { moduleLoadingCount, githubLoadingCount } = this.props
+    const { moduleLoadingCount, githubLoadingCount, token } = this.props
     const uniqueModules = getUniqueModules(profile)
     return (
       <div>
+        { !token ? <a href={AUTHORIZATION_URL}>Github OAuth</a> : null }
         <DropProfile onDrop={this.getProfile} onError={this.handleDropError} />
         <div>file error: {dropError.toString()}</div>
         <div>total modules: {uniqueModules.length}</div>
