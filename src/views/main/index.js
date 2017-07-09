@@ -71,12 +71,17 @@ class Main extends Component {
     const uniqueModules = getUniqueModules(profile)
     return (
       <div>
-        { !token ? <a href={AUTHORIZATION_URL}>Github OAuth</a> : null }
-        <DropProfile onDrop={this.getProfile} onError={this.handleDropError} />
-        <div>file error: {dropError.toString()}</div>
-        <div>total modules: {uniqueModules.length}</div>
-        <div>loading modules: {moduleLoadingCount}</div>
-        <div>loading repository: {githubLoadingCount}</div>
+        <div>
+          <DropProfile onDrop={this.getProfile} onError={this.handleDropError} />
+        </div>
+        {!token ?
+          <a href={AUTHORIZATION_URL}>Github OAuth (increases github api rate limit)</a> : null }
+        <pre>
+          <div>file error: {dropError.toString()}</div>
+          <div>total modules: {uniqueModules.length}</div>
+          <div>loading modules: {moduleLoadingCount}</div>
+          <div>loading repository: {githubLoadingCount}</div>
+        </pre>
         <div className={styles.modules}>
           {uniqueModules.map(this.renderModule)}
         </div>

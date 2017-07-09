@@ -51,9 +51,7 @@ class Module extends Component {
           <a target="_blank" rel="noopener noreferrer" href={getModuleURL(module)}>{name}</a>
         </h1>
         <p>{module.get('description')}</p>
-        <div>latest version v{module.getIn(['dist-tags', 'latest'])}</div>
-        <div>repo_type{module.getIn(['repository', 'type'])}</div>
-
+        <div>v{module.getIn(['dist-tags', 'latest'])}</div>
         <div>
           <Tag />
           {module.get('versions', new Map()).size}
