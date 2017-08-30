@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Map } from 'immutable'
 import { connect } from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import classnames from 'classnames'
 
 import { getModule } from '../../modules/module/actions'
 import { getRepository } from '../../modules/github/actions'
@@ -24,29 +25,49 @@ class Module extends Component {
     repository: ImmutablePropTypes.map,
     getModule: PropTypes.func.isRequired,
     getRepository: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
+    selected: PropTypes.bool,
+    reason: PropTypes.bool,
+    hideIfNotScoped: PropTypes.bool,
   }
 
   static defaultProps = {
     module: new Map(),
     repository: new Map(),
+    onClick: Function.prototype,
+    selected: false,
+    reason: false,
+    hideIfNotScoped: false,
   }
 
   componentWillMount() {
-    if (this.props.module.isEmpty()) {
+    if (!this.props.module.get('_id')) {
       this.props.getModule(this.props.name)
     }
   }
 
   componentWillReceiveProps({ repository, module }) {
-    if (repository.isEmpty()) {
+    if (repository.isEmpty() && module.get('repository') && !this.loading) {
+      this.loading = true
       this.props.getRepository(getReponameFromModule(module))
     }
   }
 
+  handleClick = () => {
+    this.props.onClick(this.props.name, this.props.module.get('reasons'))
+  }
+
   render() {
-    const { name, module, repository } = this.props
+    const { name, module, repository, hideIfNotScoped, reason, selected } = this.props
     return (
-      <div className={styles.module}>
+      <button
+        className={classnames(styles.module, {
+          [styles.reason]: reason,
+          [styles.selected]: selected,
+          [styles.outOfScope]: hideIfNotScoped && !reason && !selected,
+        })}
+        onClick={this.handleClick}
+      >
         <h1 className={styles.head}>
           <a target="_blank" rel="noopener noreferrer" href={getModuleURL(module)}>{name}</a>
         </h1>
@@ -72,7 +93,7 @@ class Module extends Component {
           <Legal />
           {module.get('license')}
         </div>
-      </div>
+      </button>
     )
   }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Map, List } from 'immutable'
 import { connect } from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import PropTypes from 'prop-types'
@@ -43,6 +44,14 @@ class Main extends Component {
       modules: [],
     },
     dropError: false,
+    reasons: new List(),
+  }
+
+  onClickModule = (module, reasons) => {
+    this.setState({
+      module,
+      reasons,
+    })
   }
 
   getProfile = (profile) => {
@@ -53,12 +62,25 @@ class Main extends Component {
     this.setState({ dropError: true })
   }
 
-  renderModule = (moduleName) => {
+  resetScope = () => {
+    this.setState({
+      module: null,
+      reasons: new List(),
+    })
+  }
+
+  renderModule = (mod) => {
     const { modules, repositories } = this.props
-    const module = modules.get(moduleName)
+    const module = modules.get(mod.get('name'), new Map()).merge(mod)
+    const modName = mod.get('name')
     return (
       <Module
-        name={moduleName}
+        selected={this.state.module === modName}
+        reason={this.state.reasons.includes(modName)}
+        hideIfNotScoped={!!this.state.module}
+        onClick={this.onClickModule}
+        key={mod.hashCode()}
+        name={modName}
         module={module}
         repository={repositories.get(getReponameFromModule(module))}
       />
@@ -78,10 +100,11 @@ class Main extends Component {
           <a href={AUTHORIZATION_URL}>Github OAuth (increases github api rate limit)</a> : null }
         <pre>
           <div>file error: {dropError.toString()}</div>
-          <div>total modules: {uniqueModules.length}</div>
+          <div>total modules: {uniqueModules.size}</div>
           <div>loading modules: {moduleLoadingCount}</div>
           <div>loading repository: {githubLoadingCount}</div>
         </pre>
+        <button onClick={this.resetScope}>reset</button>
         <div className={styles.modules}>
           {uniqueModules.map(this.renderModule)}
         </div>
